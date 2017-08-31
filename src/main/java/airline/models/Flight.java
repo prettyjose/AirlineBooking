@@ -1,17 +1,17 @@
 package airline.models;
 
 public
-class FlightsFromTo {
+class Flights {
     String id, routeNo, flightNum, source, destination;
 
     public
-    FlightsFromTo(){
+    Flights(){
         this.flightNum = "";
         this.source = "";
         this.destination = "";
     }
     public
-    FlightsFromTo(String flightNum, String source, String destination) {
+    Flights(String flightNum, String source, String destination) {
         this.flightNum = flightNum;
         this.source = source;
         this.destination = destination;
