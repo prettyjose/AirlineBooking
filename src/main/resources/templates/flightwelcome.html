@@ -5,7 +5,41 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text = "'Welcome to TWAirline'"/>
+<script type="application/javascript">
+    function SetPlaces(){
+        var select = document.getElementById('dropOperator');
+        var source = select.options[select.selectedIndex].value;
+        select = document.getElementById('dropOperatorTo');
+        var dest = select.options[select.selectedIndex].value;
+        document.searchForm.action = "/search/"+source+"_"+dest;
+        searchForm.submit();
+    }
+</script>
+<FORM name="searchForm" onsubmit="SetPlaces()" action="/search" method="post">
+    <select class="form-control" id="dropOperator" name="dropOperator">
 
+        <option value="cok">cok</option>
+        <option value="blr">blr</option>
+        <option value="hyd">hyd</option>
+
+    <!--option th:each="city : ${cities}"
+
+            th:value="${city.id}"
+
+            th:text="${city.name}">
+
+    </option-->
+
+    </select>
+    <select class="form-control" id="dropOperatorTo" name="dropOperatorTo">
+
+        <option value="cok">cok</option>
+        <option value="blr">blr</option>
+        <option value="hyd">hyd</option>
+    </select>
+
+        <input type="submit" value="Search"/>
+</FORM>
+<p th:text="${message}"></p>
 </body>
 </html>

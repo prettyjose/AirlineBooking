@@ -5,6 +5,29 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text = "'Welcome to TWAirline'"/>
+
+<!--/*@thymesVar id="flights" type="List<FlightsFromTo>"*/-->
+<!--p th:text = "${flights}"/-->
+<table>
+    <thead>
+    <tr>Search Result</tr>
+    <tr>
+        <!--th th:text="#{msgs.headers.name}">Name</th-->
+        <th>flights from </th>
+        <th th:text="${from}"></th>
+        <th> to </th>
+        <th th:text="${to}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="flight: ${flights}">
+        <td th:text="${flight.getFlightNum()}"></td>
+        <td th:text="${flight.getSource()}"></td>
+        <!--/*@thymesVar id="getDestination" type="FlightsFromTo.destination"*/-->
+        <td th:text="${flight.getDestination()}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
