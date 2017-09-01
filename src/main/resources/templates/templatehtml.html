@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<script type="application/javascript">
+    function SetPlaces(){
+        var select = document.getElementById('dropOperator');
+        var source = select.options[select.selectedIndex].value;
+        select = document.getElementById('dropOperatorTo');
+        var dest = select.options[select.selectedIndex].value;
+        document.searchForm.action = "/search/"+source+"_"+dest;
+        searchForm.submit();
+    }
+</script>
+<FORM name="searchForm" action="/search" th:object="${flight}" method="post">
+    <select class="form-control" id="dropOperator" th:field="${flight.source}" name="flight[source]">
+
+        <option value="cok">cok</option>
+        <option value="blr">blr</option>
+        <option value="hyd">hyd</option>
+
+    </select>
+    <select class="form-control" id="dropOperatorTo" th:field="${flight.destination}" name="flight[destination]">
+
+        <option value="cok">cok</option>
+        <option value="blr">blr</option>
+        <option value="hyd">hyd</option>
+    </select>
+
+        <input type="submit" value="Search"/>
+</FORM>
+<p th:text="${message}"></p>
+</body>
+</html>

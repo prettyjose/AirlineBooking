@@ -1,20 +1,14 @@
 package airline.models;
 
 public
-class Flights {
-    String id, routeNo, flightNum, source, destination;
+class Flight {
+    String flightNum;
+    Route route;
 
     public
-    Flights(){
-        this.flightNum = "";
-        this.source = "";
-        this.destination = "";
-    }
-    public
-    Flights(String flightNum, String source, String destination) {
+    Flight(String flightNum, Route route) {
         this.flightNum = flightNum;
-        this.source = source;
-        this.destination = destination;
+        this.route = route;
     }
 
     public
@@ -23,12 +17,17 @@ class Flights {
     }
 
     public
-    String getSource() {
-        return source;
+    Route getRoute() {
+        return route;
     }
 
     public
-    String getDestination() {
-        return destination;
+    void setFlightNum(String flightNum) {
+        this.flightNum = flightNum;
+    }
+
+    public
+    void setRoute(Route route) {
+        this.route = route;
     }
 }

@@ -2,21 +2,37 @@ package airline.models;
 
 public
 class Route {
-    String source, destination;
+    Airport source;
+    Airport destination;
 
     public
-    Route(String source, String destination) {
+    Route(){
+
+    }
+
+    public
+    Route(Airport source, Airport destination) {
         this.source = source;
         this.destination = destination;
     }
 
     public
-    String getSource() {
+    Airport getSource() {
         return source;
     }
 
     public
-    String getDestination() {
+    Airport getDestination() {
         return destination;
+    }
+
+    public
+    void setSource(Airport source) {
+        this.source = source;
+    }
+
+    public
+    void setDestination(Airport destination) {
+        this.destination = destination;
     }
 }

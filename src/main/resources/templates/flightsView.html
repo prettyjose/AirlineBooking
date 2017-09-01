@@ -15,13 +15,29 @@
     <select class="form-control" id="from" th:field="*{source.shortName}" name="from">
 
         <option th:each="airportMapEntry : ${airports}" th:value="${airportMapEntry.value.shortName}" th:text="${airportMapEntry.value.name}"></option>
+
     </select>
     <select class="form-control" id="to" th:field="*{destination.shortName}" name="to">
 
         <option th:each="airportMapEntry : ${airports}" th:value="${airportMapEntry.value.shortName}" th:text="${airportMapEntry.value.name}"></option>
+
     </select>
 
     <input type="submit" value="Search"/>
+
+    <br/>
+    <br/>
+
+    <table border="1" id="flightsTable">
+        <th>Flight No.</th>
+        <th>From</th>
+        <th>To</th>
+        <tr th:each="flight:${flights}">
+            <td th:text="${flight.flightNum}"></td>
+            <td th:text="${flight.route.source.name}"></td>
+            <td th:text="${flight.route.destination.name}"></td>
+        </tr>
+    </table>
 
 </form>
 </body>
