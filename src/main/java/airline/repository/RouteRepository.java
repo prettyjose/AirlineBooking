@@ -1,11 +1,9 @@
-package airline.datasource;
+package airline.repository;
 
 import airline.models.Airport;
 import airline.models.Route;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public
@@ -20,7 +18,7 @@ class Routes {
             return routeList;
         }else {
             routeList = new HashMap<String, Route>();
-            Map<String, Airport> airports = Airports.getAirports();
+            Map<String, Airport> airports = AirportRepository.getAirports();
             routeList.put("BLR_HYD", new Route(airports.get("BLR"), airports.get("HYD")));
             routeList.put("COK_HYD", new Route(airports.get("COK"), airports.get("HYD")));
             return routeList;
