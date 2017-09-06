@@ -10,7 +10,7 @@
 
 <br/>
 
-<form action="#" th:action="@{/flights/search}" th:object="${route}" method="post">
+<form action="#" th:action="@{/flights/search}" th:object="${searchCriteria}" method="post">
 
     <select class="form-control" id="from" th:field="*{source.shortName}" name="from">
 
@@ -20,6 +20,13 @@
 
         <option th:each="airportMapEntry : ${airports}" th:value="${airportMapEntry.value.shortName}" th:text="${airportMapEntry.value.name}"></option>
     </select>
+
+    <select class="form-control" id="travelclass" th:field="*{travelClass}" name="travelClass">
+
+        <option th:each="travelClass : ${T(airline.models.TravelClasses).values()}" th:value="${travelClass}" th:text="${travelClass}"></option>
+    </select>
+
+    <input type="number" min="1" th:field="*{requestedTravellers}"/>
 
     <input type="submit" value="Search"/>
 

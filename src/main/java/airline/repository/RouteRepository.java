@@ -7,9 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public
-class Routes {
+class RouteRepository {
     private static Map<String, Route> routeList;
-    private Routes(){
+    private
+    RouteRepository(){
 
     }
     public

@@ -1,15 +1,13 @@
 package airline.repository;
 
-import airline.models.Aircraft;
-import airline.models.Flight;
-import airline.models.Route;
+import airline.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public
-class Flights {
+class FlightRepository {
 
     private static List<Flight> flightList;
     public
@@ -21,9 +19,8 @@ class Flights {
             Map<String, Route> routes = RouteRepository.getRoutes();
             Map<String, Aircraft> aircrafts = AircraftRepository.getAircrafts();
 
-            flightList.add(new Flight("One", routes.get("BLR_HYD"), aircrafts.get("BOEING747")));
-            flightList.add(new Flight("Two", routes.get("COK_HYD"), aircrafts.get("BOEING777")));
-            flightList.add(new Flight("Three", routes.get("BLR_HYD"), aircrafts.get("BOEING747")));
+            flightList.add(new Flight("One", routes.get("BLR_HYD"), aircrafts.get("BOEING_777")));
+            flightList.add(new Flight("Three", routes.get("BLR_HYD"), aircrafts.get("AIRBUS_A321")));
             return flightList;
         }
     }

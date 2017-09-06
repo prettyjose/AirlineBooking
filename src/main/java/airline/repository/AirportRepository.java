@@ -6,9 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public
-class Airports {
+class AirportRepository {
     private static Map<String, Airport> airportList;
-    private Airports(){
+    private
+    AirportRepository(){
 
     }
     public
