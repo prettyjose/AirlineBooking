@@ -42,4 +42,6 @@ class TravelClass {
     void setPrice(Double price) {
         this.price = price;
     }
+
+//    abstract public Double getDemandBasedPrice();
 }

@@ -22,6 +22,11 @@
         <option th:each="airportMapEntry : ${airports}" th:value="${airportMapEntry.value.shortName}" th:text="${airportMapEntry.value.name}"></option>
 
     </select>
+    <br/>
+    <br/>
+    <!--input type="date" th:field="*{flightDate}" /-->
+    <br/>
+    <br/>
     <select class="form-control" id="travelclass" th:field="*{travelClass}" name="travelClass">
 
         <option th:each="travelClass : ${T(airline.models.TravelClasses).values()}" th:value="${travelClass}" th:text="${travelClass}"></option>
@@ -33,19 +38,21 @@
     <br/>
     <br/>
 
-    <div th:unless="${#lists.isEmpty(flights)}">
+    <div th:unless="${#lists.isEmpty(searchResult)}">
     <table border="1" id="flightsTable">
         <th>Flight No.</th>
         <th>From</th>
         <th>To</th>
-        <tr th:each="flight:${flights}">
-            <td th:text="${flight.flightNum}"></td>
-            <td th:text="${flight.route.source.name}"></td>
-            <td th:text="${flight.route.destination.name}"></td>
+        <th>Amount Required</th>
+        <tr th:each="eachlineinresult:${searchResult}">
+            <td th:text="${eachlineinresult.flight.flightNum}"></td>
+            <td th:text="${eachlineinresult.flight.route.source.name}"></td>
+            <td th:text="${eachlineinresult.flight.route.destination.name}"></td>
+            <td th:text="${eachlineinresult.costOfTravel}"></td>
         </tr>
     </table>
     </div>
-    <div th:if="${#lists.isEmpty(flights)}" th:text="${noflightfoundmessage}">
+    <div th:if="${#lists.isEmpty(searchResult)}" th:text="${noflightfoundmessage}">
     </div>
 
 </form>

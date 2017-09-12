@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -20,6 +20,13 @@
 
         <option th:each="airportMapEntry : ${airports}" th:value="${airportMapEntry.value.shortName}" th:text="${airportMapEntry.value.name}"></option>
     </select>
+
+    <br/>
+    <br/>
+    <!--input type="date" th: text="${#dates.format(searchCriteria.flightDate,"dd-MM-yyyy")}" th:default="${#dates.format(#dates.createToday(),"dd-MM-yyyy")}" th:field="*{flightDate}" /-->
+    <!--input type="text" th:field="*{flightDate}" th:value="${#dates.format(searchCriteria.flightDate,'dd-MM-yyyy')}" /-->
+    <br/>
+    <br/>
 
     <select class="form-control" id="travelclass" th:field="*{travelClass}" name="travelClass">
 
