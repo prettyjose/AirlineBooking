@@ -1,7 +1,7 @@
 package airline.models;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 public
 class Flight {
@@ -9,6 +9,7 @@ class Flight {
     Route route;
     Aircraft aircraft;
     Map<TravelClass, Integer> bookedSeats;
+    Date flightDate;
 
     public
     Flight(String flightNum, Route route, Aircraft aircraft) {
@@ -26,6 +27,14 @@ class Flight {
 
         bookedSeats.put(travelClassManager.getFirstClass(), 0);
 
+    }
+
+    public Date getFlightDate() {
+        return flightDate;
+    }
+
+    public void setFlightDate(Date flightDate) {
+        this.flightDate = flightDate;
     }
 
     public
@@ -66,11 +75,19 @@ class Flight {
     }
     public int getAvailableSeatsInBusinessClass(){
         TravelClass businessClass = aircraft.getTravelClassManager().getBusinessClass();
-        return businessClass.getTotalSeats() - bookedSeats.get(businessClass);
+
+        if(this.timeFromToday() <= 28/*4 weeks = 28 days*/){
+            return businessClass.getTotalSeats() - bookedSeats.get(businessClass);
+        }
+        return 0;
     }
     public int getAvailableSeatsInFirstClass(){
         TravelClass firstClass = aircraft.getTravelClassManager().getFirstClass();
-        return firstClass.getTotalSeats() - bookedSeats.get(firstClass);
+
+        if( this.timeFromToday() <= 10){
+            return firstClass.getTotalSeats() - bookedSeats.get(firstClass);
+        }
+        return 0;
     }
 
     public
@@ -88,15 +105,37 @@ class Flight {
 
     public Double calculateEconomyCost(int numRequestedSeats){
         TravelClass economyClass = aircraft.getTravelClassManager().getEconomyClass();
-        return numRequestedSeats * economyClass.getPrice();
+        Double onDemandPrice;
+        if(getAvailableSeatsInEconomy() < 0.1 * economyClass.getTotalSeats()){
+            onDemandPrice = 1.6 * economyClass.getPrice();
+        }else if(getAvailableSeatsInEconomy() < 0.5 * economyClass.getTotalSeats()){
+            onDemandPrice = 1.3 * economyClass.getPrice();
+        }else{
+            onDemandPrice = economyClass.getPrice();
+        }
+        return numRequestedSeats * onDemandPrice;
     }
     public Double calculateBusinessClassCost(int numRequestedSeats){
         TravelClass businessClass = aircraft.getTravelClassManager().getBusinessClass();
-        return numRequestedSeats * businessClass.getPrice();
+        Double onDemandPrice;
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(this.getFlightDate());
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        //140% of base fare on sundays, mondays, and fridays
+        if(dayOfWeek == 1 || dayOfWeek == 2 || dayOfWeek == 6 ){
+            onDemandPrice = 1.4 * businessClass.getPrice();
+        }else{
+            onDemandPrice = businessClass.getPrice();
+        }
+        return numRequestedSeats * onDemandPrice;
     }
     public Double calculateFirstClassCost(int numRequestedSeats){
         TravelClass firstClass = aircraft.getTravelClassManager().getFirstClass();
-        return numRequestedSeats * firstClass.getPrice();
+        Double onDemandPrice =
+                (1 +
+                0.1 * (10-this.timeFromToday())
+                ) * firstClass.getPrice();
+        return numRequestedSeats * onDemandPrice;
     }
     public Double calculateTravelCost(TravelClasses travelClass, int numRequestedSeats){
         switch(travelClass){
@@ -108,5 +147,13 @@ class Flight {
                 return calculateFirstClassCost(numRequestedSeats);
         }
         return Double.POSITIVE_INFINITY;//Todo: change to a good default
+    }
+    private long timeFromToday(){
+        Calendar calendar2 = GregorianCalendar.getInstance();
+        calendar2.setTime(this.getFlightDate());
+        Calendar calendar1 = GregorianCalendar.getInstance();
+        calendar1.setTime(new Date());
+
+        return ChronoUnit.DAYS.between(calendar2.toInstant(), calendar1.toInstant());
     }
 }

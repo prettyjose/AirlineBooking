@@ -1,8 +1,7 @@
 package airline.controllers;
 
 import airline.models.Flight;
-import airline.models.EachSearchResult;
-import airline.models.TravelClasses;
+import airline.models.EachResultLine;
 import airline.repository.AirportRepository;
 
 import airline.models.SearchCriteria;
@@ -15,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -39,19 +40,21 @@ public class FlightController {
     public String searchFlights(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model) {
         //Todo: empty num of passengers+ grayed text and tooltip.
         model.addAttribute("welcomemessage", "Welcome to Vapasi FlightRepository");
-        List<Flight> flights = flightLookUpService.getFlights(searchCriteria);
-        model.addAttribute("flights", flights);
+//        List<Flight> flights = flightLookUpService.getFlights(searchCriteria);
+//        model.addAttribute("flights", flights);
 
 
-        List<EachSearchResult> searchResult = new ArrayList<EachSearchResult>();
-        for(Flight flight: flights){
-            searchResult.add(new EachSearchResult(flight, flight.calculateTravelCost(searchCriteria.getTravelClass(), searchCriteria.getRequestedTravellers())));
-        }
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(2017, Calendar.SEPTEMBER, 10,0,0,0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        searchCriteria.setFlightDate(calendar.getTime());
+
+
+        List<EachResultLine> searchResult = flightLookUpService.searchFlights(searchCriteria);
         model.addAttribute("searchResult", searchResult);
         if(searchResult.size() == 0){
             model.addAttribute("noflightfoundmessage", "No flights found for the provided search criteria");
         }
-
 
         model.addAttribute("airports", AirportRepository.getAirports());
         return "flightsView";

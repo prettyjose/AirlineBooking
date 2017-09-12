@@ -1,9 +1,12 @@
 package airline.models;
 
+import java.util.Date;
+
 public
 class SearchCriteria {
     private Airport source;
     private Airport destination;
+    private Date flightDate;
     private int requestedTravellers = 1;
     private TravelClasses travelClass;
 
@@ -45,5 +48,13 @@ class SearchCriteria {
     public
     void setRequestedTravellers(int requestedTravellers) {
         this.requestedTravellers = requestedTravellers;
+    }
+
+    public void setFlightDate(Date flightDate) {
+        this.flightDate = flightDate;
+    }
+
+    public Date getFlightDate() {
+        return flightDate;
     }
 }
